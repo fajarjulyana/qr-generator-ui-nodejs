@@ -1,0 +1,29 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const QRCode = require('qrcode');
+const fs = require('fs');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
+app.post('/', async (req, res) => {
+    const text = req.body.text;
+    const qrCodeDataUrl = await generateQRCode(text);
+    const qrCodeImageBuffer = decodeBase64Image(qrCodeDataUrl);
+    fs.writeFileSync('public/images/qr-code.png', qrCodeImageBuffer.data);
+    res.redirect('/');
+});
+
+function decodeBase64Image(dataUrl) {
+    const matches = dataUrl.match(/^data:(.+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+        throw new Error('Invalid data URL.');
+    }
+
+    return {
+        type: matches[1],
+        data: Buffer.from(matches[2], 'base64')
+    };
+}

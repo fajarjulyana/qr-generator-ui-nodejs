@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <form action="/" method="POST">
+        <label for="text">Masukkan teks yang ingin dijadikan QR code:</label>
+        <br>
+        <input type="text" id="text" name="text">
+        <br>
+        <br>
+        <input type="submit" value="Generate QR Code">
+    </form>
+    <br>
+    <img id="qr-code" src="" alt="QR Code">
+    <script src="script.js"></script>
+</body>
+</html>
